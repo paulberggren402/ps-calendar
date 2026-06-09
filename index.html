@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Paul Scholars Program — 2026–27 Calendar</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  /* ===== CUNE BRAND TOKENS ===== */
+  :root {
+    --concordia-blue: #192C53;
+    --sky: #5A9DBF;
+    --wheat: #E2C172;
+    --slate: #646464;
+    --warm-white: #F7F4ED;
+    --nimbus: #C8C8C8;
+    --clay: #B2402A;
+
+    /* Audience colors */
+    --color-all2g: #192C53;
+    --color-c1: #B2402A;
+    --color-c2: #3B7EA1;
+    --color-c3: #3D7B50;
+    --color-mentors: #8B6914;
+
+    /* Layout */
+    --header-height: 110px;
+    --page-max-width: 1100px;
+    --cell-min-height: 90px;
+    --font-family: 'Montserrat', 'Segoe UI', system-ui, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: var(--font-family);
+    background: var(--warm-white);
+    color: var(--concordia-blue);
+    line-height: 1.4;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ===== HEADER ===== */
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--concordia-blue);
+    color: #fff;
+    padding: 0;
+    box-shadow: 0 2px 8px rgba(25, 44, 83, 0.25);
+  }
+
+  .header-inner {
+    max-width: var(--page-max-width);
+    margin: 0 auto;
+    padding: 16px 24px 0;
+  }
+
+  .header-top {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+
+  .header-title {
+    font-size: 1.35rem;
+    font-weight: 800;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+  }
+
+  .header-year {
+    font-size: 0.95rem;
+    font-weight: 500;
+    opacity: 0.7;
+    letter-spacing: 0.05em;
+  }
+
+  /* ===== FILTER BAR ===== */
+  .filter-bar {
+    display: flex;
+    gap: 4px;
+    padding-bottom: 12px;
+    flex-wrap: wrap;
+  }
+
+  .filter-btn {
+    font-family: var(--font-family);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    padding: 6px 14px;
+    border: 1.5px solid rgba(255,255,255,0.3);
+    border-radius: 4px;
+    background: transparent;
+    color: rgba(255,255,255,0.8);
+    cursor: pointer;
+    transition: all 0.15s ease;
+    white-space: nowrap;
+  }
+
+  .filter-btn:hover {
+    background: rgba(255,255,255,0.12);
+    color: #fff;
+    border-color: rgba(255,255,255,0.5);
+  }
+
+  .filter-btn.active {
+    background: var(--wheat);
+    color: var(--concordia-blue);
+    border-color: var(--wheat);
+    font-weight: 700;
+  }
+
+  /* ===== MAIN CONTENT ===== */
+  .main-content {
+    max-width: var(--page-max-width);
+    margin: 0 auto;
+    padding: 24px 24px 60px;
+  }
+
+  /* ===== MONTH SECTION ===== */
+  .month-section {
+    margin-bottom: 36px;
+  }
+
+  .month-header {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 8px;
+    padding-bottom: 6px;
+    border-bottom: 3px solid var(--concordia-blue);
+  }
+
+  .month-name {
+    font-size: 1.2rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--concordia-blue);
+  }
+
+  .month-year-label {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--slate);
+  }
+
+  /* ===== CALENDAR GRID ===== */
+  .cal-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    border-left: 1px solid var(--nimbus);
+    border-top: 1px solid var(--nimbus);
+  }
+
+  .day-header {
+    background: var(--concordia-blue);
+    color: #fff;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    text-align: center;
+    padding: 6px 4px;
+    border-right: 1px solid rgba(255,255,255,0.15);
+    border-bottom: 1px solid rgba(255,255,255,0.15);
+  }
+
+  .day-cell {
+    min-height: var(--cell-min-height);
+    padding: 4px 5px;
+    border-right: 1px solid var(--nimbus);
+    border-bottom: 1px solid var(--nimbus);
+    background: #fff;
+    vertical-align: top;
+    overflow: hidden;
+  }
+
+  .day-cell.empty {
+    background: #f0ede6;
+  }
+
+  .day-cell.today {
+    background: #fffbe6;
+    box-shadow: inset 0 0 0 2px var(--wheat);
+  }
+
+  .day-number {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--concordia-blue);
+    margin-bottom: 2px;
+    line-height: 1;
+  }
+
+  .day-cell.empty .day-number { display: none; }
+
+  /* ===== EVENT ITEMS ===== */
+  .event-item {
+    font-size: 0.65rem;
+    line-height: 1.35;
+    padding: 2px 0 2px 6px;
+    margin-bottom: 1px;
+    border-left: 3px solid transparent;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+  }
+
+  .event-item[data-audience="ALL"]  { border-left-color: var(--color-all2g); }
+  .event-item[data-audience="C1"]   { border-left-color: var(--color-c1); }
+  .event-item[data-audience="C2"]   { border-left-color: var(--color-c2); }
+  .event-item[data-audience="C3"]   { border-left-color: var(--color-c3); }
+  .event-item[data-audience="Mentors"] { border-left-color: var(--color-mentors); }
+
+  .event-marker {
+    font-weight: 700;
+    margin-right: 2px;
+  }
+  .event-marker[data-audience="ALL"]  { color: var(--color-all2g); }
+  .event-marker[data-audience="C1"]   { color: var(--color-c1); }
+  .event-marker[data-audience="C2"]   { color: var(--color-c2); }
+  .event-marker[data-audience="C3"]   { color: var(--color-c3); }
+  .event-marker[data-audience="Mentors"] { color: var(--color-mentors); }
+
+  .event-name { font-weight: 500; }
+  .event-req  { font-weight: 700; color: var(--clay); }
+  .event-time { font-weight: 400; color: var(--slate); }
+
+  .event-item.is-required {
+    font-weight: 600;
+  }
+
+  .event-item.hidden { display: none; }
+
+  /* ===== LEGEND ===== */
+  .month-legend {
+    display: flex;
+    gap: 14px;
+    margin-top: 6px;
+    padding: 4px 0;
+    flex-wrap: wrap;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.62rem;
+    font-weight: 500;
+    color: var(--slate);
+  }
+
+  .legend-swatch {
+    width: 12px;
+    height: 3px;
+    border-radius: 1px;
+    flex-shrink: 0;
+  }
+
+  .legend-swatch.all2g   { background: var(--color-all2g); }
+  .legend-swatch.c1      { background: var(--color-c1); }
+  .legend-swatch.c2      { background: var(--color-c2); }
+  .legend-swatch.c3      { background: var(--color-c3); }
+  .legend-swatch.mentors { background: var(--color-mentors); }
+
+  /* ===== FOOTER ===== */
+  .site-footer {
+    text-align: center;
+    padding: 24px;
+    font-size: 0.7rem;
+    color: var(--slate);
+    border-top: 1px solid var(--nimbus);
+    max-width: var(--page-max-width);
+    margin: 0 auto;
+  }
+
+  /* ===== PRINT ===== */
+  @media print {
+    .site-header { position: static; }
+    .filter-bar { display: none; }
+    .month-section { page-break-inside: avoid; }
+    .day-cell { min-height: 60px; }
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 768px) {
+    :root { --cell-min-height: 70px; }
+    .header-inner { padding: 12px 12px 0; }
+    .header-title { font-size: 1.1rem; }
+    .main-content { padding: 16px 8px 40px; }
+    .month-name { font-size: 1rem; }
+    .day-number { font-size: 0.7rem; }
+    .event-item { font-size: 0.58rem; padding-left: 4px; border-left-width: 2px; }
+    .filter-btn { font-size: 0.7rem; padding: 5px 10px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <div class="header-top">
+      <span class="header-title">Paul Scholars</span>
+      <span class="header-year">2026–27 Program Calendar</span>
+    </div>
+    <div class="filter-bar" id="filterBar">
+      <button class="filter-btn active" data-filter="all-events">All Events</button>
+      <button class="filter-btn" data-filter="scholars">Scholars</button>
+      <button class="filter-btn" data-filter="C1">C1</button>
+      <button class="filter-btn" data-filter="C2">C2</button>
+      <button class="filter-btn" data-filter="C3">C3</button>
+      <button class="filter-btn" data-filter="Mentors">Mentors</button>
+    </div>
+  </div>
+</header>
+
+<main class="main-content" id="calendarContainer"></main>
+
+<footer class="site-footer">
+  Paul Scholars Program &middot; Concordia University, Nebraska &middot; Updated <span id="lastUpdated"></span>
+</footer>
+
+<script>
+// ===== EVENT DATA =====
+// ==PS_EVENTS_START==
+const EVENTS = [
+  {"date":"2026-08-18","time":"","eventName":"Early Return","category":"Paul Scholars","audience":"C3","required":"Y","status":"publish","notes":""},
+  {"date":"2026-08-18","time":"6-8PM","eventName":"Welcome Picnic","category":"Paul Scholars","audience":"C3","required":"Y","status":"publish","notes":""},
+  {"date":"2026-08-19","time":"8AM-3PM","eventName":"Fall Welcome Day 1","category":"Paul Scholars","audience":"C3","required":"Y","status":"publish","notes":"DUN Collab Ctr"},
+  {"date":"2026-08-20","time":"","eventName":"Launch","category":"CUNE","audience":"C3","required":"Y","status":"publish","notes":""},
+  {"date":"2026-08-22","time":"8AM-3PM","eventName":"Fall Welcome Day 2","category":"Paul Scholars","audience":"ALL","required":"Y","status":"publish","notes":"THOM 104"},
+  {"date":"2026-08-22","time":"5-6:30PM","eventName":"Pauler Team Dinner @___","category":"Paul Scholars","audience":"ALL","required":"Y","status":"publish","notes":""},
+  {"date":"2026-08-24","time":"","eventName":"Fall Semester Begins","category":"CUNE","audience":"ALL","required":"N","status":"publish","notes":""},
+  {"date":"2026-08-24","time":"","eventName":"First Day WorkLab","category":"WorkLab","audience":"ALL","required":"Y","status":"publish","notes":""},
+  {"date":"2026-09-16","time":"6:30-7:30PM","eventName":"Book Tasting Event @ Library","category":"Paul Scholars","audience":"ALL","required":"Y","status":"publish","notes":"Library"},
+  {"date":"2026-10-16","time":"","eventName":"Fall Break Begins","category":"CUNE","audience":"","required":"N","status":"publish","notes":""},
+  {"date":"2026-11-21","time":"","eventName":"Thanksgiving Recess Begins","category":"CUNE","audience":"","required":"N","status":"publish","notes":""},
+  {"date":"2026-12-14","time":"","eventName":"Final Exams Begin","category":"CUNE","audience":"","required":"N","status":"publish","notes":""},
+  {"date":"2027-01-11","time":"","eventName":"Spring Semester Begins","category":"CUNE","audience":"","required":"N","status":"publish","notes":""},
+  {"date":"2027-01-18","time":"","eventName":"Martin Luther King Jr. Day","category":"Federal Holiday","audience":"","required":"N","status":"publish","notes":""},
+  {"date":"2027-03-26","time":"","eventName":"Easter Recess Begins","category":"Christian Holiday","audience":"","required":"N","status":"publish","notes":""},
+  {"date":"2027-03-29","time":"","eventName":"Evening classes held","category":"CUNE","audience":"","required":"N","status":"publish","notes":""},
+  {"date":"2027-05-08","time":"","eventName":"Graduation & Commencement","category":"CUNE","audience":"","required":"N","status":"publish","notes":""}
+];
+// ==PS_EVENTS_END==
+
+// ==PS_TIMESTAMP_START==
+const LAST_UPDATED = "June 9, 2026 &mdash; 3:10 PM";
+// ==PS_TIMESTAMP_END==
+
+// ===== MONTH DEFINITIONS =====
+const MONTHS = [
+  { year: 2026, month: 5,  label: "June",      yearLabel: "2026" },
+  { year: 2026, month: 6,  label: "July",      yearLabel: "2026" },
+  { year: 2026, month: 7,  label: "August",    yearLabel: "2026" },
+  { year: 2026, month: 8,  label: "September", yearLabel: "2026" },
+  { year: 2026, month: 9,  label: "October",   yearLabel: "2026" },
+  { year: 2026, month: 10, label: "November",  yearLabel: "2026" },
+  { year: 2026, month: 11, label: "December",  yearLabel: "2026" },
+  { year: 2027, month: 0,  label: "January",   yearLabel: "2027" },
+  { year: 2027, month: 1,  label: "February",  yearLabel: "2027" },
+  { year: 2027, month: 2,  label: "March",     yearLabel: "2027" },
+  { year: 2027, month: 3,  label: "April",     yearLabel: "2027" },
+  { year: 2027, month: 4,  label: "May",       yearLabel: "2027" }
+];
+
+const DAY_NAMES = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+const AUDIENCE_MARKERS = {
+  "ALL": "ALL2G",
+  "C1": "C1",
+  "C2": "C2",
+  "C3": "C3",
+  "Mentors": "M"
+};
+
+// ===== RENDERING =====
+function buildCalendar() {
+  const container = document.getElementById("calendarContainer");
+  container.innerHTML = "";
+
+  const today = new Date();
+  today.setHours(0,0,0,0);
+
+  MONTHS.forEach(m => {
+    const section = document.createElement("div");
+    section.className = "month-section";
+
+    // Month header
+    const header = document.createElement("div");
+    header.className = "month-header";
+    header.innerHTML = `<span class="month-name">${m.label}</span><span class="month-year-label">${m.yearLabel}</span>`;
+    section.appendChild(header);
+
+    // Calendar grid
+    const grid = document.createElement("div");
+    grid.className = "cal-grid";
+
+    // Day-of-week headers
+    DAY_NAMES.forEach(d => {
+      const dh = document.createElement("div");
+      dh.className = "day-header";
+      dh.textContent = d;
+      grid.appendChild(dh);
+    });
+
+    // Calculate first day and total days
+    const firstDay = new Date(m.year, m.month, 1).getDay();
+    const daysInMonth = new Date(m.year, m.month + 1, 0).getDate();
+
+    // Get events for this month, indexed by day
+    const monthEvents = {};
+    EVENTS.forEach(evt => {
+      if (evt.status !== "publish") return;
+      const parts = evt.date.split("-");
+      const ey = parseInt(parts[0]);
+      const em = parseInt(parts[1]) - 1;
+      const ed = parseInt(parts[2]);
+      if (ey === m.year && em === m.month) {
+        if (!monthEvents[ed]) monthEvents[ed] = [];
+        monthEvents[ed].push(evt);
+      }
+    });
+
+    // Leading empty cells
+    for (let i = 0; i < firstDay; i++) {
+      const cell = document.createElement("div");
+      cell.className = "day-cell empty";
+      grid.appendChild(cell);
+    }
+
+    // Day cells
+    for (let day = 1; day <= daysInMonth; day++) {
+      const cell = document.createElement("div");
+      const cellDate = new Date(m.year, m.month, day);
+      cellDate.setHours(0,0,0,0);
+
+      let cls = "day-cell";
+      if (cellDate.getTime() === today.getTime()) cls += " today";
+      cell.className = cls;
+
+      const dayNum = document.createElement("div");
+      dayNum.className = "day-number";
+      dayNum.textContent = day;
+      cell.appendChild(dayNum);
+
+      if (monthEvents[day]) {
+        monthEvents[day].forEach(evt => {
+          const item = document.createElement("div");
+          item.className = "event-item" + (evt.required === "Y" ? " is-required" : "");
+          item.setAttribute("data-audience", evt.audience);
+
+          let html = `<span class="event-marker" data-audience="${evt.audience}">${AUDIENCE_MARKERS[evt.audience] || evt.audience}</span>`;
+          html += `<span class="event-name">${evt.eventName}</span>`;
+          if (evt.required === "Y") html += ` <span class="event-req">(req.)</span>`;
+          if (evt.time) html += ` <span class="event-time">${evt.time}</span>`;
+
+          item.innerHTML = html;
+          cell.appendChild(item);
+        });
+      }
+
+      grid.appendChild(cell);
+    }
+
+    // Trailing empty cells to complete the grid
+    const totalCells = firstDay + daysInMonth;
+    const remainder = totalCells % 7;
+    if (remainder > 0) {
+      for (let i = 0; i < 7 - remainder; i++) {
+        const cell = document.createElement("div");
+        cell.className = "day-cell empty";
+        grid.appendChild(cell);
+      }
+    }
+
+    section.appendChild(grid);
+
+    // Legend
+    const legend = document.createElement("div");
+    legend.className = "month-legend";
+    legend.innerHTML = `
+      <div class="legend-item"><div class="legend-swatch all2g"></div>ALL2G = All Together</div>
+      <div class="legend-item"><div class="legend-swatch c1"></div>C1 = Cohort 1</div>
+      <div class="legend-item"><div class="legend-swatch c2"></div>C2 = Cohort 2</div>
+      <div class="legend-item"><div class="legend-swatch c3"></div>C3 = Cohort 3</div>
+      <div class="legend-item"><div class="legend-swatch mentors"></div>M = Mentors</div>
+    `;
+    section.appendChild(legend);
+
+    container.appendChild(section);
+  });
+
+  document.getElementById("lastUpdated").textContent = LAST_UPDATED;
+}
+
+// ===== FILTER LOGIC =====
+function applyFilter(filterValue) {
+  const allItems = document.querySelectorAll(".event-item");
+
+  allItems.forEach(item => {
+    const audience = item.getAttribute("data-audience");
+    let show = false;
+
+    switch (filterValue) {
+      case "all-events":
+        show = true;
+        break;
+      case "scholars":
+        // All student-facing events: ALL + C1 + C2 + C3
+        show = (audience === "ALL" || audience === "C1" || audience === "C2" || audience === "C3");
+        break;
+      case "C1":
+        show = (audience === "C1" || audience === "ALL");
+        break;
+      case "C2":
+        show = (audience === "C2" || audience === "ALL");
+        break;
+      case "C3":
+        show = (audience === "C3" || audience === "ALL");
+        break;
+      case "Mentors":
+        show = (audience === "Mentors" || audience === "ALL");
+        break;
+      default:
+        show = true;
+    }
+
+    item.classList.toggle("hidden", !show);
+  });
+}
+
+// ===== INIT =====
+document.addEventListener("DOMContentLoaded", () => {
+  buildCalendar();
+
+  const filterBar = document.getElementById("filterBar");
+  filterBar.addEventListener("click", e => {
+    const btn = e.target.closest(".filter-btn");
+    if (!btn) return;
+
+    filterBar.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    applyFilter(btn.getAttribute("data-filter"));
+  });
+});
+</script>
+</body>
+</html>
